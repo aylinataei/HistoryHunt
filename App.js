@@ -1,20 +1,52 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { LoginScreen } from './screens/loginScreen';
+import { SignInScreen } from './screens/signInScreen';
+import { ProfileScreen } from './screens/profileScreen';
 
 export default function App() {
+  const Stack = createStackNavigator();
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Start">
+        <Stack.Screen name="login" component={LoginScreen} />
+        <Stack.Screen name="SignUp" component={SignInScreen} />
+        <Stack.Screen name="profile" component={ProfileScreen} />
+
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+
+
+
+
+
+// import { StatusBar } from 'expo-status-bar';
+// import { StyleSheet, Text, View } from 'react-native';
+// import { NavigationContainer } from '@react-navigation/native'; // Add this import
+// import { createStackNavigator } from '@react-navigation/stack'; // Add this import
+
+
+// import { LoginScreen } from './screens/loginScreen';
+// import { SignInScreen } from './screens/signInScreen';
+
+// export default function App() {
+//   const Stack = createStackNavigator(); // Create the stack navigator
+
+//   return (
+//     <NavigationContainer>
+//       <Stack.Navigator initialRouteName="Start">
+//         <Stack.Screen name="login" component={LoginScreen} options={{ headerShown: false }} />
+//         <Stack.Screen name="SignUp" component={SignInScreen} />
+//         {/* Add the Sign Up screen */}
+//         {/* You can add more screens here if needed */}
+//       </Stack.Navigator>
+//     </NavigationContainer>
+//   );
+// }
+
