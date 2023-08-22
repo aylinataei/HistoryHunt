@@ -1,31 +1,43 @@
-
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, ImageBackground, Animated, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as http from '../util/http';
+import { useRoute } from '@react-navigation/native';
 
 
 
 export function SignInScreen() {
-  const navigation = useNavigation();
-  const [isAuthenticading, setIsAuthenticading] = useState(false)
-
-  const authentitionHandler = async (email, password) => {
-    console.log("authHandler", email, password)
-    // setIsAuthenticading(true) 
-    await http.signupUser(email, password)
-    // setIsAuthenticading(false)
-  }
-
-
-
-
-
   const [email, setEmail] = useState('');
 
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const [token, setToken] = useState(null);
 
+  const navigation = useNavigation();
+  const [isAuthenticading, setIsAuthenticading] = useState(false)
+
+
+  const authentitionHandler = async (email, password) => {
+    console.log("authHandler", email, password)
+
+    try {
+      const istoken = await http.signupUser(email, password);
+      await http.updateUser(name, istoken);
+
+      console.log("resp", istoken);
+      setToken(prevToken => istoken); // Use the callback form of setToken
+      console.log("token", istoken); // Here istoken is the most up-to-date value
+
+      const userData = {
+        email: email,
+        username: name, // Assuming 'name' is the username you want to store
+      };
+
+      await http.storeUser(userData); // Store the user data in Firebase
+    } catch (error) {
+      console.error('Error during authentication:', error);
+    }
+  };
 
 
 
@@ -57,15 +69,9 @@ export function SignInScreen() {
 
     authentitionHandler(email, password,)
 
-    console.log('Email:', email);
-    console.log('Name:', name);
-    console.log('Password:', password);
+    navigation.navigate('profile', { name: name, token: token }); // Pass the 'name' parameter here
+
   };
-
-
-
-
-
 
   return (
     <View style={styles.container}>

@@ -4,6 +4,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { LoginScreen } from './screens/loginScreen';
 import { SignInScreen } from './screens/signInScreen';
 import { ProfileScreen } from './screens/profileScreen';
+import { CreateHuntScreen } from './screens/createHuntScreen';
+import { FriendScreen } from './screens/friendScreen';
+import MapScreen from './screens/mapScreen';
+
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -14,7 +18,9 @@ export default function App() {
         <Stack.Screen name="login" component={LoginScreen} />
         <Stack.Screen name="SignUp" component={SignInScreen} />
         <Stack.Screen name="profile" component={ProfileScreen} />
-
+        <Stack.Screen name="create" component={CreateHuntScreen} />
+        <Stack.Screen name="inviteFriend" component={FriendScreen} />
+        <Stack.Screen name="map" component={MapScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
