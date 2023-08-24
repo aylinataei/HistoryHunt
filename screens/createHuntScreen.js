@@ -1,28 +1,48 @@
 
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import * as http from '../util/http';
 
 export function CreateHuntScreen() {
   const navigation = useNavigation();
   const [huntDuration, setHuntDuration] = useState('');
+  const [selectedFriend, setSelectedFriend] = useState(null);
+  const [pickedLocations, setPickedLocations] = useState([]);
   const [huntName, setHuntName] = useState('');
   const [showError, setShowError] = useState(false);
+  const route = useRoute();
 
 
-  const handleContinue = async () => {
+  useEffect(() => {
+    if (route.params?.selectedFriend) {
+      setSelectedFriend(route.params.selectedFriend);
+    }
+  }, [route.params?.selectedFriend]);
+
+
+
+  useEffect(() => {
+    if (route.params?.pickedLocations) {
+      setPickedLocations(route.params.pickedLocations);
+    }
+  }, [route.params?.pickedLocations]);
+
+
+  const handleContinue = async ({ route }) => {
     if (huntDuration.trim() === '' || huntName.trim() === '') {
       setShowError(true);
     } else {
 
       // Navigate to the next screen
-      navigation.navigate("inviteFriend");
+      navigation.navigate("profile", { name: huntName });
     }
     const hunt = {
       duration: huntDuration,
       name: huntName,
+      pickedfriends: selectedFriend,
+      Maplocations: pickedLocations,
 
     };
     await http.storeHunt(hunt);
@@ -57,9 +77,20 @@ export function CreateHuntScreen() {
       )}
 
       <View style={styles.centeredContainer}>
-        <TouchableOpacity style={styles.loginButton} onPress={handleContinue}>
-          <Text style={styles.loginButtonText}>Continue</Text>
+        <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate("inviteFriend")}>
+          <Text style={styles.loginButtonText}>invite Friends</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.loginButton}
+          onPress={() => navigation.navigate("map")}>
+          <Text style={styles.loginButtonText}>Add Map</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.loginButton} onPress={handleContinue}>
+          <Text style={styles.loginButtonText}>Create hunt</Text>
+        </TouchableOpacity>
+
+
       </View>
     </View>
   );

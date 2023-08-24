@@ -9,6 +9,8 @@ import * as http from '../util/http';
 import { useRoute } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 import ImagePicker from '../componets/Picture';
+import PlannedHunt from '../componets/PlannedHunt';
+import ActiveHunts from '../componets/ActiveHunts';
 
 
 
@@ -57,30 +59,65 @@ export function ProfileScreen() {
 
   // Compare the stored token with the received token
   const isAuthenticated = storedToken === token;
-  return (
+  // return (
 
+  //   <View style={styles.container}>
+  //     <ImagePicker />
+  //     <View style={styles.profileInfo}>
+
+  //       <Text style={styles.username}>{name}</Text>
+  //       <View style={styles.textContainer}>
+
+  //       </View>
+
+  //       <Text style={styles.activityText}>Active Hunt</Text>
+  //       {/* <ActiveHunts /> */}
+  //       <Text style={styles.plannedText}>Planned Hunt</Text>
+  //       <PlannedHunt />
+  //     </View>
+
+  //     {/* Medal Circles */}
+  //     {/* <View style={styles.medalContainer}>
+  //       <Text style={styles.medalsHeader}>Medals</Text>
+  //       <View style={styles.medalRow}>
+  //         <View style={styles.medalCircle} />
+  //         <View style={styles.medalCircle} />
+  //         <View style={styles.medalCircle} />
+  //         <View style={styles.medalCircle} />
+  //         <View style={styles.medalCircle} />
+  //       </View>
+  //     </View> */}
+  //     {/* Create Hunt Button */}
+  //     <TouchableOpacity style={styles.createHuntButton} onPress={() => navigation.navigate('create')}>
+  //       <Text style={styles.createHuntButtonText}>Create Hunt</Text>
+  //     </TouchableOpacity>
+  //   </View>
+  // );
+
+  return (
     <View style={styles.container}>
       <ImagePicker />
-      <View style={styles.profileInfo}>
 
-        <Text style={styles.username}>{name}</Text>
-        <View style={styles.textContainer}>
-          <Text style={styles.activityText}>Active Hunt</Text>
-          <Text style={styles.plannedText}>Planned Hunt</Text>
+      {/* Profile Info */}
+      <View style={styles.sectionContainer}>
+        <View style={styles.profileInfo}>
+          {/* ... (existing profile info components) */}
         </View>
+        {/* ... (medal circles if needed) */}
       </View>
 
-      {/* Medal Circles */}
-      <View style={styles.medalContainer}>
-        <Text style={styles.medalsHeader}>Medals</Text>
-        <View style={styles.medalRow}>
-          <View style={styles.medalCircle} />
-          <View style={styles.medalCircle} />
-          <View style={styles.medalCircle} />
-          <View style={styles.medalCircle} />
-          <View style={styles.medalCircle} />
-        </View>
+      {/* Active Hunt */}
+      <View style={styles.sectionContainer}>
+        <Text style={styles.sectionText}>Active Hunt</Text>
+        <ActiveHunts />
       </View>
+
+      {/* Planned Hunt */}
+      <View style={styles.sectionContainer}>
+        <Text style={styles.sectionText}>Planned Hunt</Text>
+        <PlannedHunt />
+      </View>
+
       {/* Create Hunt Button */}
       <TouchableOpacity style={styles.createHuntButton} onPress={() => navigation.navigate('create')}>
         <Text style={styles.createHuntButtonText}>Create Hunt</Text>
@@ -88,6 +125,8 @@ export function ProfileScreen() {
     </View>
   );
 }
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -100,7 +139,7 @@ const styles = StyleSheet.create({
   textContainer: {
     flexDirection: 'column',
     alignItems: 'center',
-    marginTop: '85%',
+    marginTop: '10%',
 
   },
   profileInfo: {
@@ -120,15 +159,18 @@ const styles = StyleSheet.create({
     color: '#456268',
     marginTop: 10,
   },
-  activityText: {
-    fontSize: 18,
-    color: '#456268',
+  // activityText: {
+  //   fontSize: 18,
+  //   color: '#456268',
+  //   marginBottom: '10%',
+  //   marginTop: '10'
 
 
-  },
+  // },
   plannedText: {
     fontSize: 18,
     color: '#456268',
+    marginBottom: '60%',
   },
   medalContainer: {
     alignItems: 'center',
@@ -166,6 +208,15 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 14,
     fontWeight: 'bold',
+  },
+  sectionContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginVertical: 20,
+  },
+  sectionText: {
+    fontSize: 18,
+    color: '#456268',
   },
 });
 

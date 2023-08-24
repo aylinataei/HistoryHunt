@@ -50,3 +50,9 @@ export const getUser = async () => {
   console.log('resp', resp.data)
   return resp.data;
 }
+
+export const getHunt = async () => {
+  const resp = await axios.get(`${rootUrl}/hunt.json`)
+  console.log('resp', resp.data)
+  return resp.data;
+}
