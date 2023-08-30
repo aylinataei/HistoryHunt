@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { LoginScreen } from './screens/loginScreen';
-import { SignInScreen } from './screens/signInScreen';
+import { SignUpScreen } from './screens/signUpScreen';
 import { ProfileScreen } from './screens/profileScreen';
 import { CreateHuntScreen } from './screens/createHuntScreen';
 import { FriendScreen } from './screens/friendScreen';
@@ -16,7 +16,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Start">
         <Stack.Screen name="login" component={LoginScreen} />
-        <Stack.Screen name="SignUp" component={SignInScreen} />
+        <Stack.Screen name="SignUp" component={SignUpScreen} />
         <Stack.Screen name="profile" component={ProfileScreen} />
         <Stack.Screen name="create" component={CreateHuntScreen} />
         <Stack.Screen name="inviteFriend" component={FriendScreen} />

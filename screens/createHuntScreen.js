@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import * as http from '../util/http';
+import LocationPicker from '../componets/LocationPicker';
 
 export function CreateHuntScreen() {
   const navigation = useNavigation();
@@ -71,6 +72,7 @@ export function CreateHuntScreen() {
           onChangeText={text => setHuntName(text)}
         />
       </View>
+      <LocationPicker />
 
       {showError && (
         <Text style={styles.errorText}>Please fill in both fields before continuing.</Text>

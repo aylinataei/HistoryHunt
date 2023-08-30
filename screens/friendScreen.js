@@ -49,11 +49,9 @@ export function FriendScreen({ navigation }) {
               selectedFriendNames.includes(item.username) && styles.selectedFriend,
             ]}
             onPress={() => {
-              console.log("hejsan1")
               const updatedNames = selectedFriendNames.includes(item.username)
                 ? selectedFriendNames.filter(name => name !== item.username)
                 : [...selectedFriendNames, item.username];
-              console.log("hejsan2")
               setSelectedFriendNames(updatedNames);
               setSelectedFriend([...selectedFriend, item]);
             }}>

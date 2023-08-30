@@ -50,7 +50,20 @@ export const getUser = async () => {
   console.log('resp', resp.data)
   return resp.data;
 }
-
+export const getUserById = async (idToken) => {
+  console.log('**************************')
+  console.log(idToken)
+  const payload = {
+    idToken: idToken,
+  };
+  try {
+    const resp = await axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${API_KEY}`, payload);
+    return resp.data.users;
+  } catch (error) {
+    console.error("Error fetching user data:", error.response?.data || error.message);
+    throw error;
+  }
+};
 export const getHunt = async () => {
   const resp = await axios.get(`${rootUrl}/hunt.json`)
   console.log('resp', resp.data)

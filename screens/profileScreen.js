@@ -1,6 +1,6 @@
 
-import React, { useRef, useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Alert, Button } from 'react-native';
+import React, { useRef, useState, useEffect, useContext } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Alert, Button, FlatList } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
@@ -11,6 +11,8 @@ import { useNavigation } from '@react-navigation/native';
 import ImagePicker from '../componets/Picture';
 import PlannedHunt from '../componets/PlannedHunt';
 import ActiveHunts from '../componets/ActiveHunts';
+import { AuthContext } from '../componets/ContextAuth';
+
 
 
 
@@ -18,85 +20,43 @@ export function ProfileScreen() {
   const [profileImage, setProfileImage] = useState(null);
   const navigation = useNavigation();
   const route = useRoute();
-  const { name, token } = route.params;
+  const { name, email, token } = route.params;
+  const [friends, setFriends] = useState([]);
+  const [selectedFriend, setSelectedFriend] = useState([]);
+  const [selectedFriendNames, setSelectedFriendNames] = useState([]);
 
 
-  const handleCreateHunt = () => {
-    // Add navigation logic for creating a hunt
-  };
+  const authCtx = useContext(AuthContext);
 
-
+  const [username, setUsername] = useState('');
 
 
 
   useEffect(() => {
-    async function storeToken() {
+    const fetchUserData = async () => {
       try {
-        await AsyncStorage.setItem('token', token);
+        const userData = await http.getUserById(authCtx.token); // Fetch user from Firebase
+        const foundUser = userData.find(u => u.email.toLowerCase() === authCtx.email.toLowerCase()); // Modify according to your data structure
+
+        if (foundUser) {
+          setUsername(foundUser.displayName);
+        }
       } catch (error) {
-        console.error('Error storing token:', error);
+        console.error('Error fetching user data:', error);
       }
-    }
-    console.log("profile", token)
+    };
 
-    storeToken();
-  }, [token]);
-  const [storedToken, setStoredToken] = useState('');
+    fetchUserData();
+  }, []);
 
-  const [storedUsername, setStoredUsername] = useState('');
-  // useEffect(() => {
-  //   async function fetchStoredUsername() {
-  //     try {
-  //       const username = await AsyncStorage.getItem(token);
-  //       setStoredUsername(username);
-  //     } catch (error) {
-  //       console.error('Error fetching stored username:', error);
-  //     }
-  //   }
 
-  //   fetchStoredUsername();
-  // }, []);
 
-  // Compare the stored token with the received token
-  const isAuthenticated = storedToken === token;
-  // return (
-
-  //   <View style={styles.container}>
-  //     <ImagePicker />
-  //     <View style={styles.profileInfo}>
-
-  //       <Text style={styles.username}>{name}</Text>
-  //       <View style={styles.textContainer}>
-
-  //       </View>
-
-  //       <Text style={styles.activityText}>Active Hunt</Text>
-  //       {/* <ActiveHunts /> */}
-  //       <Text style={styles.plannedText}>Planned Hunt</Text>
-  //       <PlannedHunt />
-  //     </View>
-
-  //     {/* Medal Circles */}
-  //     {/* <View style={styles.medalContainer}>
-  //       <Text style={styles.medalsHeader}>Medals</Text>
-  //       <View style={styles.medalRow}>
-  //         <View style={styles.medalCircle} />
-  //         <View style={styles.medalCircle} />
-  //         <View style={styles.medalCircle} />
-  //         <View style={styles.medalCircle} />
-  //         <View style={styles.medalCircle} />
-  //       </View>
-  //     </View> */}
-  //     {/* Create Hunt Button */}
-  //     <TouchableOpacity style={styles.createHuntButton} onPress={() => navigation.navigate('create')}>
-  //       <Text style={styles.createHuntButtonText}>Create Hunt</Text>
-  //     </TouchableOpacity>
-  //   </View>
-  // );
 
   return (
     <View style={styles.container}>
       <ImagePicker />
+
+      <Text style={styles.username}>{username}</Text>
 
       {/* Profile Info */}
       <View style={styles.sectionContainer}>
@@ -225,6 +185,5 @@ const styles = StyleSheet.create({
 
 
 export default ProfileScreen;
-
 
 

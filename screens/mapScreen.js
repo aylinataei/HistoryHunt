@@ -1,4 +1,4 @@
-// who can i code so that when the user press on create hunt after saving the positions an images of  the choosen position will show up in my createhunt screnn
+
 
 import { useCallback, useLayoutEffect, useState } from 'react';
 import { Dimensions, View, StyleSheet, Alert, Text, TouchableOpacity } from 'react-native';
@@ -19,7 +19,7 @@ const MapScreen = ({ navigation }) => {
     // Save the displayedLocation to pickedLocations array
     setPickedLocations([...pickedLocations, displayedLocation]);
 
-    // Clear displayedLocation after saving
+
     setDisplayedLocation(null);
   }, [displayedLocation, pickedLocations]);
 
@@ -84,7 +84,7 @@ const MapScreen = ({ navigation }) => {
           <Marker
             coordinate={displayedLocation}
             title='Your picked location'
-            pinColor="blue" // Custom pin color for the current displayed location
+            pinColor="blue"
           />
         )}
       </MapView>

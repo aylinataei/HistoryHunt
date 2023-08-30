@@ -25,6 +25,22 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "you need premission to use camera."
+        }
+      ],
+        [
+          "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "You need to grand your premission to use your location."
+        }
+      ]
+      
+    ]
+  
   }
 }
